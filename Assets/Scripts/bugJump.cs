@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class bugJump : MonoBehaviour
 {
-    public float jumpForce = 18f;
-    public float jumpInterval = 2f;
+    public float jumpForce = 18f; //how high the buges jump
+    public float jumpInterval = 2f; //time inbetween jumps
     public float jumpTimeOffset = 0f; //time offest before enemy starts jumping
 
     private Rigidbody2D rb;
@@ -29,6 +29,14 @@ public class bugJump : MonoBehaviour
 
     void Jump()
     {
+        // bugs move faster after round 5
+        if (gameManager.Instance.roundCounter >= 10)
+        {
+            rb.gravityScale = 6f; // Pulls them down faster
+            jumpForce = 37f;      // Pushes them up harder to fight the gravity
+            jumpInterval = 1.5f; //shortens the time in between jumps
+        }
+
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         isGrounded = false;
     }
